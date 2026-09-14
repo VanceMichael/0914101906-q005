@@ -1,3 +1,9 @@
 package main
+
 import "testing"
-func TestPortDefault(t *testing.T){if port()!="8080"{t.Fatal("端口默认值错误")}}
+
+func TestDatabaseCanBeOpened(t *testing.T) {
+	t.Setenv("BASKETBALL_DB_PATH", t.TempDir()+"/test.db")
+	db, err := openDatabase(); if err != nil { t.Fatal(err) }; defer db.Close()
+	if err := db.Ping(); err != nil { t.Fatal(err) }
+}
